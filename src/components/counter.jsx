@@ -6,10 +6,11 @@ class Counter extends Component {
         return (
             
              <div className="row">
-                        <div className="col-1">
+                  
+                 <div className="col-1">
                         <span className = {this.getBadgeClasses()}>
                             {this.formatCount()}</span>
-                        </div>
+                 </div>
                  <div className="col">
                         <button onClick = {() => this.props.onIncrement(this.props.counter)} 
                         className="btn btn-secondary btn-sm">+</button>
