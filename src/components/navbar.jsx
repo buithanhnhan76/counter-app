@@ -1,13 +1,19 @@
 import React from 'react';
+import Counters from './counters';
 
-const NavBar = ({totalCounters}) => {
+const NavBar = ({totalCounters,totalPrice}) => {
         return (
-            <nav className="navbar navbar-light bg-light">
+            <nav className="navbar navbar-light bg-secondary">
                 <div className="container-fluid">
-                <a className="navbar-brand" href="#">
-                    Total <span className="badge badge-pill badge-secondary">
-                    {totalCounters}
-                    </span></a>
+                    <div className="navbar-brand text-white">
+                        Number Product:
+                        <span className="badge badge-light mx-2">
+                        {totalCounters}
+                        </span> 
+                        Total Price:
+                        <span className="badge badge-light mx-2">
+                        {totalPrice} $</span>
+                    </div>
                 </div>
             </nav>
           );
