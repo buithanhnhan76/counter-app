@@ -4,24 +4,21 @@ import './App.css';
 import Counters from './components/counters';
 import Footer from './components/footer';
 import Pagination from './components/common/pagination';
+import { getGenres } from './services/fakeGenreServices';
+import { getProducts } from './services/fakeProductServices';
 
 class App extends Component {
 // App is the cotainer of counters
   state = {
-    counters: [
-        {id:1, number:0, price: 100, type: "Computer"},
-        {id:2, number:0, price: 200, type: "Tivi"},
-        {id:3, number:0, price: 50, type: "Laptop"},
-        {id:4, number:0, price: 25, type: "Phone"},
-        {id:5, number:0, price: 120, type: "Computer"},
-        {id:6, number:0, price: 300, type: "Tivi"},
-        {id:7, number:0, price: 10, type: "Laptop"},
-        {id:8, number:0, price: 500, type: "Computer"}
-    ],
+    counters: [],
     pageSize: 4,
-    currentPage: 1
+    currentPage: 1,
+    genres: [],
 };
 
+componentDidMount(){
+  this.setState({counters: getProducts(),genres: [{name:"All Genres"},...getGenres()]});
+}
 // handleIncrement arrow function
 // this.setState
 handleIncrement = counter => {
@@ -42,7 +39,7 @@ handleDecrement = counter => {
 
 // filter method to delete the counter with the selected id
 handleDelete = counterId => {
-    const counters = this.state.counters.filter(c => c.id !== counterId);
+    const counters = this.state.counters.filter(c => c._id !== counterId);
     this.setState({counters});
 };
 
@@ -58,6 +55,10 @@ handleReset = () => {
 
 handlePageChange = (page) => {
   this.setState({currentPage: page});
+}
+
+handleGenreSelect = (genre) => {
+  this.setState({selectedGenre: genre,currentPage:1})
 }
 
 caculateSum = (object) => {
@@ -79,8 +80,12 @@ caculateSum = (object) => {
       <Counters onReset={this.handleReset} onIncrement={this.handleIncrement}
       onDecrement={this.handleDecrement} caculateSum={this.caculateSum} 
       onDelete={this.handleDelete} counters ={this.state.counters}
-      currentPage={this.state.currentPage} pageSize={this.state.pageSize}></Counters>
-      <Pagination itemsCount={this.state.counters.length} pageSize={this.state.pageSize}
+      currentPage={this.state.currentPage} pageSize={this.state.pageSize}
+      genres={this.state.genres} onItemSelect={this.handleGenreSelect}
+      selectedItem = {this.state.selectedGenre}
+      ></Counters>
+      <Pagination itemsCount={this.state.selectedGenre&&this.state.selectedGenre._id?this.state.counters.filter(counter => counter.genre === this.state.selectedGenre).length:this.state.counters.length} 
+      pageSize={this.state.pageSize}
       onPageChange={this.handlePageChange} currentPage={this.state.currentPage}></Pagination>
     </main>
     <Footer></Footer>

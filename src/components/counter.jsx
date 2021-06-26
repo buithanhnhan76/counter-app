@@ -42,11 +42,11 @@ class Counter extends Component {
                         ><i className="fas fa-minus-circle"></i></button>
                         <button
                             className="btn btn-danger btn-sm"
-                            onClick={() => this.props.onDelete(this.props.counter.id)}
+                            onClick={() => this.props.onDelete(this.props.counter._id)}
                         ><i className="far fa-trash-alt"></i>
                         </button>
                         <span className="ml-3 badge badge-secondary" style={{width:100}}>Price: {this.props.counter.price}$</span> 
-                        <span className="ml-3 badge badge-secondary" style={{width:100}}>{this.props.counter.type}</span>
+                        <span className="ml-3 badge badge-secondary" style={{width:100}}>{this.props.counter.genre}</span>
                     </div>
                 </div>
             </div>
