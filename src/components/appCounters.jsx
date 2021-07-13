@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-import NavBar from './components/navbar';
-import './App.css';
-import Counters from './components/counters';
-import Pagination from './components/common/pagination';
-import { getGenres } from './services/fakeGenreServices';
-import { getProducts } from './services/fakeProductServices';
-import AboutUs from './components/aboutUs';
+import NavBarCounters from './navbarcounters';
+import '../App.css';
+import Counters from './counters';
+import Pagination from './common/pagination';
+import { getGenres } from '../services/fakeGenreServices';
+import { getProducts } from '../services/fakeProductServices';
+import AboutUs from './aboutUs';
 import {Route, Switch} from 'react-router-dom';
-import Posts from './components/posts';
-import AppCounters from './components/appCounters';
-import Home from './components/home';
-import PostDetails from './components/postDetails';
+import Posts from './posts';
 
 
-class App extends Component {
+class AppCounters extends Component {
 // App is the cotainer of counters
   state = {
     counters: [],
@@ -79,15 +76,26 @@ caculateSum = (object) => {
   render(){
   return (
     <React.Fragment>
-    <NavBar></NavBar>
+    {/* send navbar the number of counter with value is greater than 0 */}
+   <NavBarCounters totalCounters={this.state.counters.filter(c => c.number>0).length}
+    totalPrice={this.caculateSum(this.state.counters)}></NavBarCounters>
+    <main className = "container" >
+      <Counters onReset={this.handleReset} onIncrement={this.handleIncrement}
+      onDecrement={this.handleDecrement} caculateSum={this.caculateSum} 
+      onDelete={this.handleDelete} counters ={this.state.counters}
+      currentPage={this.state.currentPage} pageSize={this.state.pageSize}
+      genres={this.state.genres} onItemSelect={this.handleGenreSelect}
+      selectedItem = {this.state.selectedGenre}
+      ></Counters>
+      <Pagination itemsCount={this.state.selectedGenre&&this.state.selectedGenre._id?this.state.counters.filter(counter => counter.genre === this.state.selectedGenre).length:this.state.counters.length} 
+      pageSize={this.state.pageSize}
+      onPageChange={this.handlePageChange} currentPage={this.state.currentPage}></Pagination>
+    </main>
     <div className="content">
     {/* if you have a space like  {AboutUs} ></Route> it not gonna work*/}
     <Switch>
     <Route path="/aboutus" component={AboutUs}></Route>
-    <Route path="/posts/:id" component={PostDetails}></Route>
     <Route path="/posts" component={Posts}></Route>
-    <Route path="/appcounters" component={AppCounters}></Route>
-    <Route path="/" component={AppCounters}></Route>
     
     </Switch>
     </div>
@@ -99,7 +107,7 @@ caculateSum = (object) => {
 
 };
 
-export default App;
+export default AppCounters;
 
 
 
