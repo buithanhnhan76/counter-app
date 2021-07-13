@@ -1,22 +1,26 @@
-import React from 'react';
-import Counters from './counters';
+import React, { Component } from 'react';
+// Link has a feature that it will prevent load page 
+import { Link } from 'react-router-dom';
 
-const NavBar = ({totalCounters,totalPrice}) => {
-        return (
-            <nav className="navbar navbar-light bg-secondary">
+class NavBar extends Component {
+    render() { 
+        return ( 
+                // bootstrap navbar
+                <nav className="navbar navbar-light bg-secondary">
                 <div className="container-fluid">
                     <div className="navbar-brand text-white">
-                        Number :
-                        <span className="badge badge-light mx-2">
-                        {totalCounters}
-                        </span> 
-                        Total Price:
-                        <span className="badge badge-light mx-2">
-                        {totalPrice} $</span>
+                        <Link to="/appcounters" className="text-white mr-2">App Counters</Link>
+
+                        <Link to="/home" className="text-white mr-2">Home</Link>
+    
+                        <Link to="/aboutus" className="text-white mr-2"> About Us </Link>
+
+                        <Link to="/posts" className="text-white">Posts</Link>
                     </div>
                 </div>
-            </nav>
-          );
-    };
+                </nav>
+         );
+    }
+}
  
 export default NavBar;
